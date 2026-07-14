@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AgenticLoops/AgenticLoops.csproj" />
+  <Project Path="MultiAgentOrchestration/MultiAgentOrchestration.csproj" />
+</Solution>
