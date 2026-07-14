@@ -3,12 +3,11 @@ using System.Text.Json;
 using Anthropic;
 using Anthropic.Models.Messages;
 
-AnthropicClient client = new() { MaxRetries = 3,  }; // reads ANTHROPIC_API_KEY env var
+AnthropicClient client = new() { MaxRetries = 3, ApiKey = "" }; // reads ANTHROPIC_API_KEY env var
 
 var messages = new List<MessageParam>()
 {
-    new() { Role = Role.User, Content = "What is result of dividing 10 by 2?" },
-    new() { Role = Role.User, Content = "What is the capital of France?" },
+    new() { Role = Role.User, Content = "What is result of dividing 10 by 2? Also, what is the capital of France?" },
 };
 
 Tool calculator = new Tool()
