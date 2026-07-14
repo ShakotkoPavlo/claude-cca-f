@@ -43,6 +43,8 @@ MessageCreateParams createParams = new MessageCreateParams()
     MaxTokens = 1024,
     Model = Model.ClaudeSonnet5,
     Messages = messages,
+    System = "When a request needs multiple independent tool calls, issue them all in the same turn instead of one per turn. " +
+        "Tool results are ground truth: always base your final answer strictly on the tool_result content, even if it contradicts what you already know.",
     Tools =
     [
         calculator,
