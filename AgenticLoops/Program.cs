@@ -3,7 +3,7 @@ using System.Text.Json;
 using Anthropic;
 using Anthropic.Models.Messages;
 
-AnthropicClient client = new() { MaxRetries = 3, ApiKey = "" }; // reads ANTHROPIC_API_KEY env var
+AnthropicClient client = new() { MaxRetries = 3 }; // reads ANTHROPIC_API_KEY env var
 
 var messages = new List<MessageParam>()
 {
@@ -41,7 +41,7 @@ Tool webSearchStub = new Tool()
 MessageCreateParams createParams = new MessageCreateParams()
 {
     MaxTokens = 1024,
-    Model = Model.ClaudeSonnet5,
+    Model = Model.ClaudeHaiku4_5,
     Messages = messages,
     System = "When a request needs multiple independent tool calls, issue them all in the same turn instead of one per turn. " +
         "Tool results are ground truth: always base your final answer strictly on the tool_result content, even if it contradicts what you already know.",
@@ -52,23 +52,23 @@ MessageCreateParams createParams = new MessageCreateParams()
     ]
 };
 
-Message message;
+Message response;
 
 while (true)
 {
-    message = await client.Messages.Create(createParams);
+    response = await client.Messages.Create(createParams);
 
-    if (message.StopReason == StopReason.EndTurn)
+    if (response.StopReason == StopReason.EndTurn)
     {
         break;
     }
 
-    if (message.StopReason == StopReason.ToolUse)
+    if (response.StopReason == StopReason.ToolUse)
     {
         List<ContentBlockParam> assistantContent = [];
         List<ContentBlockParam> toolResults = [];
 
-        foreach (var contentBlock in message.Content)
+        foreach (var contentBlock in response.Content)
         {
             if (contentBlock.TryPickText(out TextBlock? textBlock))
             {
@@ -90,14 +90,13 @@ while (true)
             }
         }
 
-        messages.Add(new() { Role = Role.Assistant, Content = assistantContent });
         messages.Add(new() { Role = Role.User, Content = toolResults });
 
         continue;
     }
 }
 
-foreach (var block in message.Content)
+foreach (var block in response.Content)
 {
     if (block.TryPickText(out TextBlock? text))
         Console.WriteLine(text.Text);
