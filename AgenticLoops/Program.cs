@@ -90,6 +90,7 @@ while (true)
             }
         }
 
+        messages.Add(new() { Role = Role.Assistant, Content = assistantContent });
         messages.Add(new() { Role = Role.User, Content = toolResults });
 
         continue;

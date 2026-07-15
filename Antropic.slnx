@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="AgenticLoops/AgenticLoops.csproj" />
   <Project Path="MultiAgentOrchestration/MultiAgentOrchestration.csproj" />
+  <Project Path="SubAgentInvocation/SubAgentInvocation.csproj" Id="5496c8a5-23be-46a7-9302-e11473125829" />
+  <Project Path="WorkflowEnforcement/WorkflowEnforcement.csproj" Id="f1efab8c-1294-4fc5-ac37-ac7473a7a35b" />
 </Solution>
